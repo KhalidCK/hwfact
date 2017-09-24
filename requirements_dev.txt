@@ -1,0 +1,9 @@
+pip
+bumpversion
+wheel
+watchdog
+flake8
+Sphinx
+
+pytest
+pytest-runner
