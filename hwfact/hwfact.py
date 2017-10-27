@@ -84,3 +84,22 @@ def to_gist(raw):
             'nb_processor': len(processor),
             'nb_thread': sum([int(proc['Thread Count']) for proc in processor])
             }
+
+
+def to_gist_batch(data):
+    '''
+    Parameters
+    ----------
+    data:dict
+        look like {'hostname':raw dmidecode,...}
+    Returns
+    -------
+    iterator
+        [{'hostname':x.z,serial_number: XXX...},{'hostname':x.z.z, ...}]
+    '''
+    for hostname,raw in data.items():
+        try:
+            yield {**{'hostname':hostname},**(to_gist(raw))}
+        except Exception as e:
+            yield {}
+            logger.info("can't parse "+hostname)
